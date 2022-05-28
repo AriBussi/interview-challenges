@@ -12,6 +12,12 @@ function App() {
     api.list().then(setItems);
   }, []);
 
+  const handleItemDelete = (id: number) => {
+    const remaining = items?.filter((i) => i.id !== id);
+
+    setItems(remaining);
+  };
+
   return (
     <main className={styles.main}>
       <h1>Supermarket list</h1>
@@ -20,9 +26,9 @@ function App() {
         <button>Add</button>
       </form>
       <ul>
-        {items.map((item) => (
+        {items?.map((item) => (
           <li key={item.id} className={item.completed ? styles.completed : ""}>
-            {item.text} <button>[X]</button>
+            {item.text} <button onClick={() => handleItemDelete(item.id)}>[X]</button>
           </li>
         ))}
       </ul>
