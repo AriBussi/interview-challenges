@@ -6,7 +6,7 @@ import styles from "./App.module.scss";
 import api from "./api";
 
 function App() {
-  const [items, setItems] = useState<Item[] | null>(null);
+  const [items, setItems] = useState<Item[] | []>([]);
 
   useEffect(() => {
     api.list().then(setItems);
