@@ -21,7 +21,7 @@ function App() {
       </form>
       <ul>
         {items.map((item) => (
-          <li className={item.completed ? styles.completed : ""}>
+          <li key={item.id} className={item.completed ? styles.completed : ""}>
             {item.text} <button>[X]</button>
           </li>
         ))}
