@@ -19,25 +19,17 @@ function App() {
     );
   }
 
-  function handleAdd(event: React.FormEvent<HTMLFormElement>) {
+  function handleAdd(event: React.ChangeEvent<Form>) {
     event.preventDefault();
 
     const newItem = {
-      id: 1, // fix unique id
-      text: "Tombola", // read value entered by user
+      id: 5, // fix unique id
+      text: inputValue,
       completed: false,
     };
 
-    const updatedItems = [];
-
-    updatedItems.push(newItem, ...items);
-
-    setItems(updatedItems);
+    setItems([newItem, ...items]);
     setInputValue("");
-  }
-
-  function handleInputChange(event: React.ChangeEvent<Form>) {
-    setInputValue(event.target.value);
   }
 
   function handleRemove(id: Item["id"]) {
@@ -51,8 +43,13 @@ function App() {
   return (
     <main className={styles.main}>
       <h1>Supermarket list</h1>
-      <form onChange={handleInputChange} onSubmit={handleAdd}>
-        <input defaultValue={inputValue} name="text" type="text" />
+      <form onSubmit={handleAdd}>
+        <input
+          name="text"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
         <button>Add</button>
       </form>
       <ul>
