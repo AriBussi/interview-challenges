@@ -19,7 +19,7 @@ function App() {
   }
 
   function handleAdd(event: React.ChangeEvent<Form>) {
-    // Should implement
+    event.preventDefault();
   }
 
   function handleRemove(id: Item["id"]) {
