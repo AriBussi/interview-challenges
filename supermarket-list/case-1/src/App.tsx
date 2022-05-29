@@ -11,7 +11,7 @@ interface Form extends HTMLFormElement {
 
 function App() {
   const [items, setItems] = useState<Item[]>([]);
-  const [inputValue, setInputValue] = useState(""); // TO DO - typed state
+  const [inputValue, setInputValue] = useState(""); // TO DO - typed state ... or is it done under the hood?
 
   function handleToggle(id: Item["id"]) {
     setItems((items) =>
@@ -19,8 +19,20 @@ function App() {
     );
   }
 
-  function handleAdd(event: React.ChangeEvent<Form>) {
+  function handleAdd(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const newItem = {
+      id: 1, // fix unique id
+      text: "Tombola", // read value entered by user
+      completed: false,
+    };
+
+    const updatedItems = [];
+
+    updatedItems.push(newItem, ...items);
+
+    setItems(updatedItems);
     setInputValue("");
   }
 
@@ -40,7 +52,7 @@ function App() {
     <main className={styles.main}>
       <h1>Supermarket list</h1>
       <form onChange={handleInputChange} onSubmit={handleAdd}>
-        <input name="text" type="text" value={inputValue} />
+        <input defaultValue={inputValue} name="text" type="text" />
         <button>Add</button>
       </form>
       <ul>
