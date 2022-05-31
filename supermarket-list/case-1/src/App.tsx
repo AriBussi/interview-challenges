@@ -23,7 +23,7 @@ function App() {
     event.preventDefault();
 
     const newItem = {
-      id: 5, // fix unique id
+      id: Math.random(),
       text: inputValue,
       completed: false,
     };
