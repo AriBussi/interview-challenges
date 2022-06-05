@@ -10,6 +10,7 @@ interface Form extends HTMLFormElement {
 }
 
 function App() {
+  const [loading, setLoading] = useState<Boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
   const [inputValue, setInputValue] = useState(""); // TO DO - typed state ... or is it done under the hood?
 
@@ -37,32 +38,41 @@ function App() {
   }
 
   useEffect(() => {
-    api.list().then(setItems);
+    api.list().then((list) => {
+      setItems(list);
+      setLoading(false);
+    });
   }, []);
 
   return (
     <main className={styles.main}>
-      <h1>Supermarket list</h1>
-      <form onSubmit={handleAdd}>
-        <input
-          name="text"
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <button>Add</button>
-      </form>
-      <ul>
-        {items?.map((item) => (
-          <li
-            key={item.id}
-            className={item.completed ? styles.completed : ""}
-            onClick={() => handleToggle(item.id)}
-          >
-            {item.text} <button onClick={() => handleRemove(item.id)}>[X]</button>
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <div className={styles.spinner} />
+      ) : (
+        <>
+          <h1>Supermarket list</h1>
+          <form onSubmit={handleAdd}>
+            <input
+              name="text"
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            <button disabled={loading}>Add</button>
+          </form>
+          <ul>
+            {items?.map((item) => (
+              <li
+                key={item.id}
+                className={item.completed ? styles.completed : ""}
+                onClick={() => handleToggle(item.id)}
+              >
+                {item.text} <button onClick={() => handleRemove(item.id)}>[X]</button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </main>
   );
 }

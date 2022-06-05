@@ -21,6 +21,6 @@ export default {
             completed: false,
           },
         ]);
-      }, 1000),
+      }, 1500),
     ),
 };
