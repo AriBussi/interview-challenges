@@ -12,7 +12,6 @@ interface Form extends HTMLFormElement {
 function App() {
   const [loading, setLoading] = useState<Boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
-  const [inputValue, setInputValue] = useState(""); // TO DO - typed state ... or is it done under the hood?
 
   function handleToggle(id: Item["id"]) {
     setItems((items) =>
@@ -25,12 +24,11 @@ function App() {
 
     const newItem = {
       id: Math.random(),
-      text: inputValue,
+      text: event.target.value,
       completed: false,
     };
 
     setItems([newItem, ...items]);
-    setInputValue("");
   }
 
   function handleRemove(id: Item["id"]) {
@@ -52,12 +50,7 @@ function App() {
         <>
           <h1>Supermarket list</h1>
           <form onSubmit={handleAdd}>
-            <input
-              name="text"
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
+            <input name="text" type="text" />
             <button disabled={loading}>Add</button>
           </form>
           <ul>
