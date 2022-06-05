@@ -42,30 +42,26 @@ function App() {
     });
   }, []);
 
+  if (loading) return <div className={styles.spinner} />;
+
   return (
     <main className={styles.main}>
-      {loading ? (
-        <div className={styles.spinner} />
-      ) : (
-        <>
-          <h1>Supermarket list</h1>
-          <form onSubmit={handleAdd}>
-            <input name="text" type="text" />
-            <button disabled={loading}>Add</button>
-          </form>
-          <ul>
-            {items?.map((item) => (
-              <li
-                key={item.id}
-                className={item.completed ? styles.completed : ""}
-                onClick={() => handleToggle(item.id)}
-              >
-                {item.text} <button onClick={() => handleRemove(item.id)}>[X]</button>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      <h1>Supermarket list</h1>
+      <form onSubmit={handleAdd}>
+        <input name="text" type="text" />
+        <button disabled={loading}>Add</button>
+      </form>
+      <ul>
+        {items?.map((item) => (
+          <li
+            key={item.id}
+            className={item.completed ? styles.completed : ""}
+            onClick={() => handleToggle(item.id)}
+          >
+            {item.text} <button onClick={() => handleRemove(item.id)}>[X]</button>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
